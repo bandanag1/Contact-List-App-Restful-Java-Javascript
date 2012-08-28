@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>New Contact</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">		
+		$(document).ready(function() {
+			var url = "http://localhost:8080/FLSContactListApp/rest/contacts/";
+			var table = $('<table border=1/>').appendTo('#contactListDiv');
+			
+			// Dynamically create table headers
+			$('<tr/>').appendTo(table)		
+				.append($('<th/>').text("Name"))
+			    .append($('<th/>').text("Company Name"))
+			    .append($('<th/>').text("Designation"))
+			    .append($('<th/>').text("Address"))
+			    .append($('<th/>').text("Telephone No"))
+			    .append($('<th/>').text("Email Id"));			
+
+			$.getJSON(url, function(json) {
+				$(json.contact).each(function(index) {
+						// Dynamically create table data
+						$('<tr/>').appendTo(table)
+				           	.append($('<td/>').text(this.name))
+				            .append($('<td/>').text(this.companyName))
+				            .append($('<td/>').text(this.designation))
+				            .append($('<td/>').text(this.address))
+				        	.append($('<td/>').text(this.telephoneNo))
+				            .append($('<td/>').text(this.emailId));
+				});
+			});
+		});
+	</script>
+	</head>
+	<body>
+		<form action="/FLSContactListApp/rest/contacts" method="POST">
+			<table>
+				<tr><th><h2>Contact List Form</h2></th></tr>
+				<tr>
+					<td><label for="name">Name</label></td>
+					<td><input name="name" /></td>
+				</tr>
+				<tr>
+					<td><label for="companyName">Company Name</label></td>
+					<td><input name="companyName" /></td>
+				</tr>
+				<tr>
+					<td><label for="designation">Designation</label></td>
+					<td><input name="designation" /></td>
+				</tr>
+				<tr>
+					<td><label for="address">Address</label></td>
+					<td><input name="address" /></td>
+				</tr>
+				<tr>
+					<td><label for="telephoneNo">Telephone No</label></td>
+					<td><input name="telephoneNo" /></td>
+				</tr>
+				<tr>
+					<td><label for="emailId">Email Id</label></td>
+					<td><input name="emailId" /></td>
+				</tr>				
+			</table>
+			<p/>
+			<div>
+				<input type="submit" value="Submit" />
+			</div>
+			<p></p>			
+		</form>
+		<div id="contactListDiv">
+				<h2>Contact List Details</h2>
+		</div>
+	</body>
+</html>
